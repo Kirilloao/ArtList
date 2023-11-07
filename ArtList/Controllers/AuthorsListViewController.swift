@@ -16,15 +16,23 @@ final class AuthorsListViewController: UITableViewController {
     }()
     
     // MARK: - Private Properties
-    private var artists: Artist!
+    private var artists: Artist?
     private var authors: [Author] = []
+    private var filteredAuthors: [Author] = []
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false}
+        return text.isEmpty
+    }
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
-
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
         setNavigationBar()
+        setupSearchController()
         fetchAuthors(with: Links.api.rawValue)
     }
     
@@ -32,9 +40,6 @@ final class AuthorsListViewController: UITableViewController {
     private func setNavigationBar() {
         title = "Authors"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setTableView() {
@@ -43,9 +48,19 @@ final class AuthorsListViewController: UITableViewController {
         tableView.showsVerticalScrollIndicator = false
     }
     
+    private func setupSearchController() {
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
+    }
+    
     // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        authors.count
+        isFiltering
+        ? filteredAuthors.count
+        : authors.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,7 +72,10 @@ final class AuthorsListViewController: UITableViewController {
             return UITableViewCell()
         }
         
-        let author = artists.artists[indexPath.row]
+        let author = isFiltering
+        ? filteredAuthors[indexPath.row]
+        : authors[indexPath.row]
+        
         cell.configure(with: author)
         cell.selectionStyle = .none
         
@@ -65,13 +83,14 @@ final class AuthorsListViewController: UITableViewController {
     }
     
     // MARK: - UITableViewDelegate
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
-    }
+    //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        UITableView.automaticDimension
+    //    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailsVC = DetailsViewController()
-        detailsVC.works = artists.artists[indexPath.row].works
+        detailsVC.works = isFiltering ? filteredAuthors[indexPath.row].works :
+        authors[indexPath.row].works
         navigationController?.pushViewController(detailsVC, animated: true)
     }
 }
@@ -92,3 +111,17 @@ extension AuthorsListViewController {
     }
 }
 
+// MARK: - UISearchResultsUpdating
+extension AuthorsListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    private func filterContentForSearchText(_ searchText: String) {
+        filteredAuthors = authors.filter{ author in
+            author.name.lowercased().contains(searchText.lowercased())
+        }
+        
+        tableView.reloadData()
+    }
+}
