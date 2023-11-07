@@ -9,13 +9,9 @@ import UIKit
 
 final class AuthorsListViewController: UITableViewController {
     
-    let authors = [
-        UIImage(named: "0"), UIImage(named: "1"), UIImage(named: "2"),
-        UIImage(named: "3"), UIImage(named: "4"), UIImage(named: "5"),
-        UIImage(named: "6")
-    ]
-    
-    var artists: [Author] = []
+    // MARK: - Private Properties
+    private var artists: Artist!
+    private var authors: [Author] = []
     
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
@@ -34,18 +30,26 @@ final class AuthorsListViewController: UITableViewController {
     private func setTableView() {
         tableView.register(AuthorCell.self, forCellReuseIdentifier: AuthorCell.reuseID)
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
     }
     
     // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        artists.count
+        authors.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AuthorCell.reuseID, for: indexPath) as? AuthorCell else { return UITableViewCell() }
+        guard
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: AuthorCell.reuseID,
+                for: indexPath) as? AuthorCell
+        else {
+            return UITableViewCell()
+        }
         
-        let author = artists[indexPath.row]
+        let author = artists.artists[indexPath.row]
         cell.configure(with: author)
+        cell.selectionStyle = .none
         
         return cell
     }
@@ -53,6 +57,12 @@ final class AuthorsListViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailsVC = DetailsViewController()
+        detailsVC.works = artists.artists[indexPath.row].works
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
 }
 
@@ -62,10 +72,9 @@ extension AuthorsListViewController {
         NetworkManager.shared.fetch(with: url) { result in
             switch result {
             case .success(let data):
-                self.artists = data.artists
+                self.artists = data
+                self.authors = data.artists
                 self.tableView.reloadData()
-                
-                
             case .failure(let error):
                 print(error)
             }
