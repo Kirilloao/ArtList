@@ -30,7 +30,8 @@ final class AuthorsListViewController: UITableViewController {
     }
     
     private func setTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(AuthorCell.self, forCellReuseIdentifier: AuthorCell.reuseID)
+        tableView.separatorStyle = .none
     }
     
     // MARK: - UITableViewDataSource
@@ -39,12 +40,17 @@ final class AuthorsListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AuthorCell.reuseID, for: indexPath) as? AuthorCell else { return UITableViewCell() }
         
+        let authorImage = authors[indexPath.row]
+        cell.configure(with: authorImage!)
+    
         return cell
     }
     
     // MARK: - UITableViewDelegate
-    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        150
+    }
 }
 
