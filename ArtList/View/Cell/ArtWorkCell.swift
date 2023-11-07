@@ -7,10 +7,14 @@
 
 import UIKit
 
+protocol ArtWorkCellDelegate: AnyObject {
+    func didTapImageView(in cell: ArtWorkCell)
+}
+
 
 final class ArtWorkCell: UITableViewCell {
     
-
+    weak var delegate: ArtWorkCellDelegate?
     
     // MARK: - Static Properties
     static let reuseID = String(describing: ArtWorkCell.self)
@@ -33,7 +37,7 @@ final class ArtWorkCell: UITableViewCell {
         return title
     }()
     
-    private lazy var workImageView: UIImageView = {
+    lazy var workImageView: UIImageView = {
         var image = UIImageView()
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
@@ -69,7 +73,7 @@ final class ArtWorkCell: UITableViewCell {
     }
     
     @objc private func imageTapped() {
- 
+        delegate?.didTapImageView(in: self)
     }
     
     // MARK: - Private Methods

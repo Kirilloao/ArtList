@@ -18,7 +18,7 @@ final class DetailsViewController: UITableViewController {
         super.viewDidLoad()
         setTableView()
         setupNavigationBar()
-     
+        
     }
     
     // MARK: - Private Methods
@@ -49,16 +49,28 @@ final class DetailsViewController: UITableViewController {
         
         cell.configure(with: work)
         cell.selectionStyle = .none
+        cell.delegate = self
         
         return cell
     }
     
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        250
+        //        250
         UITableView.automaticDimension
     }
-
+    
 }
 
 // MARK: - ArtWorkCellDelegate
+extension DetailsViewController: ArtWorkCellDelegate {
+    func didTapImageView(in cell: ArtWorkCell) {
+        guard let indexPath = tableView.indexPath(for: cell),
+              let image = cell.workImageView.image else { return }
+        
+        let fullScreenVC = FullScreenImageViewController(image: image)
+        fullScreenVC.modalPresentationStyle = .overFullScreen
+        fullScreenVC.modalTransitionStyle = .crossDissolve
+        present(fullScreenVC, animated: true)
+    }
+}

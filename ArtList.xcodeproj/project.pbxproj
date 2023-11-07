@@ -18,6 +18,7 @@
 		3C0F33182AFA735600CB835F /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0F33172AFA735600CB835F /* Artist.swift */; };
 		3C0F331A2AFA922900CB835F /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0F33192AFA922900CB835F /* DetailsViewController.swift */; };
 		3C0F331C2AFA941200CB835F /* ArtWorkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0F331B2AFA941200CB835F /* ArtWorkCell.swift */; };
+		3C0F33282AFAB1D700CB835F /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0F33272AFAB1D700CB835F /* FullScreenImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		3C0F33172AFA735600CB835F /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		3C0F33192AFA922900CB835F /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		3C0F331B2AFA941200CB835F /* ArtWorkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtWorkCell.swift; sourceTree = "<group>"; };
+		3C0F33272AFAB1D700CB835F /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			children = (
 				3C0F32F92AFA5F6200CB835F /* AuthorsListViewController.swift */,
 				3C0F33192AFA922900CB835F /* DetailsViewController.swift */,
+				3C0F33272AFAB1D700CB835F /* FullScreenImageViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				3C0F330C2AFA6B8800CB835F /* AuthorCell.swift in Sources */,
 				3C0F331C2AFA941200CB835F /* ArtWorkCell.swift in Sources */,
 				3C0F32F82AFA5F6200CB835F /* SceneDelegate.swift in Sources */,
+				3C0F33282AFAB1D700CB835F /* FullScreenImageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
