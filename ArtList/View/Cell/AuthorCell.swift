@@ -16,7 +16,6 @@ final class AuthorCell: UITableViewCell {
     // MARK: - Private UI Properties
     private lazy var mainView: UIView = {
         var view = UIView()
-//        view.backgroundColor = UIColor(red: 0.96, green: 0.90, blue: 0.55, alpha: 1.00)
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.borderWidth = 1
@@ -30,14 +29,21 @@ final class AuthorCell: UITableViewCell {
         return image
     }()
     
+    private lazy var nameLabel: UILabel = {
+        var nameLabel = UILabel()
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        nameLabel.numberOfLines = 0
+        nameLabel.textAlignment = .center
+        return nameLabel
+    }()
+    
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel()
-        label.text = "Pablo Ruiz y Picasso (25 October 1881 â€“ 8 April 1973), also known as Pablo Picasso, was a Spanish painter, sculptor, printmaker, ceramicist, stage designer, poet and playwright who spent most of his adult life in France."
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
-
+    
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -50,8 +56,10 @@ final class AuthorCell: UITableViewCell {
     }
     
     // MARK: - Public Methods
-    func configure(with image: UIImage) {
-        authorImageView.image = image
+    func configure(with author: Author) {
+        descriptionLabel.text = author.bio
+        authorImageView.image = UIImage(named: author.image)
+        nameLabel.text = author.name
     }
     
     // MARK: - Private Methods
@@ -59,7 +67,7 @@ final class AuthorCell: UITableViewCell {
         addSubview(mainView)
         mainView.addSubview(authorImageView)
         mainView.addSubview(descriptionLabel)
-//        addSubview(authorImageView)
+        mainView.addSubview(nameLabel)
     }
     
     private func setupConstraints() {
@@ -73,8 +81,15 @@ final class AuthorCell: UITableViewCell {
         authorImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(15)
             make.top.equalToSuperview().offset(15)
-            make.bottom.equalToSuperview().offset(-15)
+            make.bottom.equalTo(nameLabel.snp.top).offset(-4)
+            make.height.equalTo(100)
             make.width.equalTo(100)
+        }
+        
+        nameLabel.snp.makeConstraints { make in
+            make.left.equalTo(authorImageView.snp.left)
+            make.right.equalTo(authorImageView.snp.right)
+            make.bottom.equalToSuperview().offset(-5)
         }
         
         descriptionLabel.snp.makeConstraints { make in
