@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class DetailsViewController: UITableViewController {
     
     // MARK: - Public Methods
@@ -18,7 +17,6 @@ final class DetailsViewController: UITableViewController {
         super.viewDidLoad()
         setTableView()
         setupNavigationBar()
-        
     }
     
     // MARK: - Private Methods
@@ -34,6 +32,7 @@ final class DetailsViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         works.count
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,14 +58,12 @@ final class DetailsViewController: UITableViewController {
         //        250
         UITableView.automaticDimension
     }
-    
 }
 
 // MARK: - ArtWorkCellDelegate
 extension DetailsViewController: ArtWorkCellDelegate {
     func didTapImageView(in cell: ArtWorkCell) {
-        guard let indexPath = tableView.indexPath(for: cell),
-              let image = cell.workImageView.image else { return }
+        guard let image = cell.workImageView.image else { return }
         
         let fullScreenVC = FullScreenImageViewController(image: image)
         fullScreenVC.modalPresentationStyle = .overFullScreen

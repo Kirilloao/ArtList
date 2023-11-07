@@ -11,10 +11,10 @@ protocol ArtWorkCellDelegate: AnyObject {
     func didTapImageView(in cell: ArtWorkCell)
 }
 
-
 final class ArtWorkCell: UITableViewCell {
     
-    weak var delegate: ArtWorkCellDelegate?
+    // MARK: - Public Properties
+    var delegate: ArtWorkCellDelegate?
     
     // MARK: - Static Properties
     static let reuseID = String(describing: ArtWorkCell.self)
@@ -41,7 +41,6 @@ final class ArtWorkCell: UITableViewCell {
         var image = UIImageView()
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         image.addGestureRecognizer(tapGesture)
         image.isUserInteractionEnabled = true
@@ -53,7 +52,7 @@ final class ArtWorkCell: UITableViewCell {
         info.numberOfLines = 0
         return info
     }()
-
+    
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -84,7 +83,6 @@ final class ArtWorkCell: UITableViewCell {
         mainView.addSubview(infoLabel)
     }
     
-    
     private func setupConstraints() {
         mainView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(5)
@@ -96,7 +94,6 @@ final class ArtWorkCell: UITableViewCell {
             make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
-
         }
         
         workImageView.snp.makeConstraints { make in
@@ -113,5 +110,4 @@ final class ArtWorkCell: UITableViewCell {
             make.bottom.equalToSuperview().offset(-10)
         }
     }
-    
 }
