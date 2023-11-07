@@ -12,15 +12,23 @@ final class FullScreenImageViewController: UIViewController {
     // MARK: - Private UI Properties
     private lazy var imageView: UIImageView = {
         var imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = view.bounds
+        imageView.contentMode = .scaleToFill
+//        imageView.frame = view.bounds
         imageView.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(dismissFullScreen)
-        )
-        imageView.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(
+//            target: self,
+//            action: #selector(dismissFullScreen)
+//        )
+//        imageView.addGestureRecognizer(tapGesture)
         return imageView
+    }()
+    
+    private lazy var closeButton: UIButton = {
+        var button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "arrow.down.right.and.arrow.up.left"), for: .normal)
+        button.addTarget(self, action: #selector(dismissFullScreen), for: .touchUpInside)
+        button.tintColor = .white
+        return button
     }()
     
     private let image: UIImage
@@ -40,6 +48,7 @@ final class FullScreenImageViewController: UIViewController {
         super.viewDidLoad()
         setupBlurEffect()
         setViews()
+        setupConstraints()
     }
     
     // MARK: - Private Actions
@@ -48,13 +57,29 @@ final class FullScreenImageViewController: UIViewController {
     }
     
     // MARK: - Private Methods
+    private func setupConstraints() {
+        imageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(200)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(400)
+        }
+        
+        closeButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-5)
+            make.right.equalToSuperview().offset(-5)
+        }
+    }
+    
     private func setViews() {
         imageView.image = image
         view.addSubview(imageView)
+        imageView.addSubview(closeButton)
+//        view.addSubview(closeButton)
     }
     
     private func setupBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .dark) // Или .light, .extraLight в зависимости от желаемого эффекта
+        let blurEffect = UIBlurEffect(style: .extraLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

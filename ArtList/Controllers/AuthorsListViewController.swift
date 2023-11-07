@@ -9,10 +9,17 @@ import UIKit
 
 final class AuthorsListViewController: UITableViewController {
     
+    // MARK: - Private UI Properties
+    private lazy var searchController: UISearchController = {
+        var searchController = UISearchController(searchResultsController: nil)
+        return searchController
+    }()
+    
     // MARK: - Private Properties
     private var artists: Artist!
     private var authors: [Author] = []
     
+
     // MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +32,9 @@ final class AuthorsListViewController: UITableViewController {
     private func setNavigationBar() {
         title = "Authors"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setTableView() {
