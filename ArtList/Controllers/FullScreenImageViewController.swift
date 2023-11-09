@@ -15,11 +15,11 @@ final class FullScreenImageViewController: UIViewController {
         imageView.contentMode = .scaleToFill
 //        imageView.frame = view.bounds
         imageView.isUserInteractionEnabled = true
-//        let tapGesture = UITapGestureRecognizer(
-//            target: self,
-//            action: #selector(dismissFullScreen)
-//        )
-//        imageView.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissFullScreen)
+        )
+        imageView.addGestureRecognizer(tapGesture)
         return imageView
     }()
     
@@ -31,8 +31,8 @@ final class FullScreenImageViewController: UIViewController {
         return button
     }()
     
-    private let image: UIImage
-    
+    private var image: UIImage
+
     // MARK: - Init
     init(image: UIImage) {
         self.image = image
@@ -79,7 +79,7 @@ final class FullScreenImageViewController: UIViewController {
     }
     
     private func setupBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .extraLight)
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
