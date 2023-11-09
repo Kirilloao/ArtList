@@ -1,4 +1,4 @@
-# ArtList 🖼️
+# ArtList 👨‍🎨🖼️
 
 ## SwiftMarathonX
 
