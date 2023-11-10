@@ -12,6 +12,7 @@ IndividualСhallenge 2
 * NoStoryboard
 * URLSession
 * TableView
+* SearchBar
 * SnapKit
 
 
