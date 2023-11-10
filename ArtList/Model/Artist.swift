@@ -7,19 +7,20 @@
 
 import Foundation
 
-struct Artist: Decodable {
+struct Artist: Codable {
     var artists: [Author]
 }
 
-struct Author: Decodable {
+struct Author: Codable {
     var name: String
     var bio: String
     var image: String
     var works: [Work]
 }
 
-struct Work: Decodable {
+struct Work: Codable {
     var title: String
     var image: String
     var info: String
 }
+
