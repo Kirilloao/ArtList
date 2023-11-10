@@ -15,10 +15,15 @@ final class AuthorsListViewController: UITableViewController {
         return searchController
     }()
     
+    private var switchButton = UIBarButtonItem()
+    
     // MARK: - Private Properties
+    private var isLight = true
     private var artists: Artist?
     private var authors: [Author] = []
     private var filteredAuthors: [Author] = []
+    
+    // MARK: - Computed Properties
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false}
         return text.isEmpty
@@ -33,13 +38,39 @@ final class AuthorsListViewController: UITableViewController {
         setTableView()
         setNavigationBar()
         setupSearchController()
+        setupSwitchButton()
         fetchAuthors(with: Links.api.rawValue)
+    }
+    
+    // MARK: - Private Actions
+    @objc private func switchButtonDidTapped() {
+        
+        isLight.toggle()
+        
+        switchButton.title = isLight ? "Light" : "Dark"
+        switchButton.tintColor = isLight ? .black : .white
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate {
+            sceneDelegate.toggleAppearance(animated: true)
+        }
     }
     
     // MARK: - Private Methods
     private func setNavigationBar() {
         title = "Authors"
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func setupSwitchButton() {
+        switchButton = UIBarButtonItem(
+            title: "Dark",
+            style: .done,
+            target: self,
+            action: #selector(switchButtonDidTapped)
+        )
+        switchButton.tintColor = .black
+        navigationItem.rightBarButtonItem = switchButton
     }
     
     private func setTableView() {
@@ -54,6 +85,7 @@ final class AuthorsListViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
+        searchController.searchBar.barTintColor = .white
     }
     
     // MARK: - UITableViewDataSource
@@ -81,11 +113,6 @@ final class AuthorsListViewController: UITableViewController {
         
         return cell
     }
-    
-    // MARK: - UITableViewDelegate
-    //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        UITableView.automaticDimension
-    //    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailsVC = DetailsViewController()

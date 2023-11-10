@@ -40,8 +40,12 @@ final class ArtWorkCell: UITableViewCell {
     lazy var workImageView: UIImageView = {
         var image = UIImageView()
         image.layer.cornerRadius = 10
+        image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(imageTapped)
+        )
         image.addGestureRecognizer(tapGesture)
         image.isUserInteractionEnabled = true
         return image
@@ -85,11 +89,12 @@ final class ArtWorkCell: UITableViewCell {
     
     private func setupConstraints() {
         mainView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(5)
+            make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(5)
             make.bottom.equalToSuperview().offset(-5)
             make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.right.equalTo(contentView.safeAreaLayoutGuide.snp.right).offset(-16)
         }
+        
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(20)
@@ -98,9 +103,9 @@ final class ArtWorkCell: UITableViewCell {
         
         workImageView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(50)
-            make.right.equalToSuperview().offset(-50)
-            make.height.equalTo(200)
+            make.left.equalToSuperview().offset(60)
+            make.right.equalToSuperview().offset(-60)
+            make.height.equalTo(130)
         }
         
         infoLabel.snp.makeConstraints { make in

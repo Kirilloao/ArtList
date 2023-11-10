@@ -118,7 +118,6 @@
 		3C0F330F2AFA6BA100CB835F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3C0F331D2AFA9E4B00CB835F /* Fonts */,
 				3C0F32FE2AFA5F6300CB835F /* Assets.xcassets */,
 				3C0F33002AFA5F6300CB835F /* LaunchScreen.storyboard */,
 			);
@@ -139,13 +138,6 @@
 				3C0F33172AFA735600CB835F /* Artist.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		3C0F331D2AFA9E4B00CB835F /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

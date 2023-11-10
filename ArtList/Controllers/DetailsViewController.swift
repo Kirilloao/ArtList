@@ -21,7 +21,10 @@ final class DetailsViewController: UITableViewController {
     
     // MARK: - Private Methods
     private func setTableView() {
-        tableView.register(ArtWorkCell.self, forCellReuseIdentifier: ArtWorkCell.reuseID)
+        tableView.register(
+            ArtWorkCell.self,
+            forCellReuseIdentifier: ArtWorkCell.reuseID
+        )
         tableView.separatorStyle = .none
     }
     
@@ -32,7 +35,6 @@ final class DetailsViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         works.count
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,7 +57,6 @@ final class DetailsViewController: UITableViewController {
     
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //        250
         UITableView.automaticDimension
     }
 }
@@ -68,6 +69,7 @@ extension DetailsViewController: ArtWorkCellDelegate {
         let fullScreenVC = FullScreenImageViewController(image: image)
         fullScreenVC.modalPresentationStyle = .overFullScreen
         fullScreenVC.modalTransitionStyle = .crossDissolve
+        
         present(fullScreenVC, animated: true)
     }
 }

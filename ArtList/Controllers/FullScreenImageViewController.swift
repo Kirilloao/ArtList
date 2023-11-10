@@ -75,14 +75,15 @@ final class FullScreenImageViewController: UIViewController {
         imageView.image = image
         view.addSubview(imageView)
         imageView.addSubview(closeButton)
-//        view.addSubview(closeButton)
     }
     
     private func setupBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let blurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        // уменьшения видимости размытия
+//        blurEffectView.alpha = 0.9
         view.addSubview(blurEffectView)
     }
 }
