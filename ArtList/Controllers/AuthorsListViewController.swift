@@ -47,7 +47,7 @@ final class AuthorsListViewController: UITableViewController {
         
         isLight.toggle()
         
-        switchButton.title = isLight ? "Light" : "Dark"
+        switchButton.title = isLight ? "Dark" : "Light"
         switchButton.tintColor = isLight ? .black : .white
         
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
